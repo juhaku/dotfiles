@@ -25,7 +25,7 @@ kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmon
 
 flavor-apps = $(shell if [[ "$(FLAVOR)" == "GNOME" ]]; then echo $(gnome-applist); elif [[ "$(FLAVOR)" == "KDE" ]]; then echo $(kde-applist); fi)
 applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegram-desktop rustup zsh \
-		eza zsh-autosuggestions zsh-syntax-highlight zsh-history-substring-search \
+		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
 		libreoffice-fresh maven yarn visual-studio-code-bin \
 		intellij-idea-community-edition clang gimp git tig jq ufw
@@ -37,14 +37,7 @@ endef
 # install system packages
 install-system-packages: install-paru
 	@echo "Install system packages"
-	paru $(PACMAN_FLAGS) -S neovim okular konsole ibus-libpinyin \
-		breeze-icons kvantum qt5ct qt6ct qadwaitadecorations-qt6 \
-		alacritty dconf-editor spotify $(slack-app) \
-		keepassxc telegram-desktop gnome-browser-connector rustup zsh \
-		eza zsh-autosuggestions zsh-syntax-highlight zsh-history-substring-search \
-		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
-		gparted appimagelauncher-bin libreoffice-fresh maven yarn visual-studio-code-bin \
-		intellij-idea-community-edition clang gimp git
+	paru $(PACMAN_FLAGS) -S $(applist)
 	xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
 # install paru and alias it as yay if yay is not intalled
