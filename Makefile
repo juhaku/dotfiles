@@ -150,9 +150,9 @@ copy-ssh-configs:
 	@echo "Setup ssh configs"
 	mkdir ~/.ssh
 ifdef host
-	scp $(host):~/ssshconfig.zip ~/Downloads/
+	scp $(host):~/sshconfig.zip ~/Downloads/
 else
-	@echo "Enter ssh host: "; read host; scp $$host:~/ssshconfig.zip ~/Downloads/
+	@echo "Enter ssh host: "; read host; scp $$host:~/sshconfig.zip ~/Downloads/
 endif
 	cp ~/Downloads/sshconfig/* ~/.ssh/
 	rm -r ~/Downloads/sshconfig*
