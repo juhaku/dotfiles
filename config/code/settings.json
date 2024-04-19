@@ -1,0 +1,173 @@
+{
+    "editor.inlayHints.enabled": "on",
+    "workbench.colorTheme": "Default Dark Modern",
+    "telemetry.telemetryLevel": "off",
+    "dart.flutterSdkPath": "/home/juha/dev/flutter",
+    "vim.camelCaseMotion.enable": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": false,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+    },
+    "vim.normalModeKeyBindings": [
+      {
+        "before": ["<leader>", "w", "f"],
+        "after": ["<leader>", "<leader>", "/"]
+      },
+      {
+        "before": ["*"],
+        "after": ["*", "<ESC>"]
+      },
+      {
+        "before": ["#"],
+        "after": ["#", "<ESC>"]
+      }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+      {
+        "before": ["<leader>", "d"],
+        "after": ["d", "d"]
+      },
+      {
+        "before": ["<leader>", "n"],
+        "commands": [":nohl"]
+      },
+      {
+        "before": ["g", "r"],
+        "commands": ["editor.action.goToReferences"]
+      },
+      {
+        "before": ["g", "i"],
+        "commands": ["editor.action.goToImplementation"]
+      },
+      {
+        "before": ["<leader>", "w"],
+        "commands": ["workbench.action.files.save"]
+      },
+      {
+        "before": ["<leader>", "b"],
+        "commands": ["editor.debug.action.toggleBreakpoint"]
+      },
+      {
+        "before": ["]", "c"],
+        "commands": ["editor.action.dirtydiff.next"]
+      },
+      {
+        "before": ["[", "c"],
+        "commands": ["editor.action.dirtydiff.previous"]
+      },
+      {
+        "before": ["[", "d"],
+        "commands": ["editor.action.marker.prev"]
+      },
+      {
+        "before": ["]", "d"],
+        "commands": ["editor.action.marker.next"]
+      },
+      {
+        "before": ["t", "g"],
+        "commands": ["workbench.action.findInFiles"]
+      },
+      {
+        "before": ["t", "f"],
+        "commands": ["workbench.action.quickOpen"]
+      },
+      {
+        "before": ["<leader>", "q", "a"],
+        "commands": ["workbench.action.closeWindow"]
+      },
+      {
+        "before": ["<leader>", "o", "s"],
+        "commands": ["workbench.action.openRecent"]
+      },
+      {
+        "before": ["=", "="],
+        "commands": ["editor.action.reindentselectedlines"]
+      },
+      {
+        "before": ["<leader>", "r", "n"],
+        "commands": ["editor.action.rename"]
+      },
+      {
+        "before": ["<leader>", "f"],
+        "commands": ["editor.action.formatDocument"]
+      },
+      {
+        "before": ["<leader>", "h", "r"],
+        "commands": ["git.revertSelectedRanges"]
+      },
+      {
+        "before": ["<leader>", "h", "s"],
+        "commands": ["git.stageSelectedRanges"]
+      },
+      {
+        "before": ["<leader>", "g", "b"],
+        "commands": ["gitlens.toggleFileBlame"]
+      },
+      {
+        "before": ["<leader>", "e"],
+        "commands": ["workbench.action.toggleSidebarVisibility"]
+      },
+      {
+        "before": ["t", "o"],
+        "commands": ["workbench.action.closeOtherEditors"]
+      },
+      {
+        "before": ["t", "c"],
+        "commands": ["workbench.action.closeActiveEditor"]
+      },
+      {
+        "before": ["t", "a"],
+        "commands": ["workbench.action.closeAllEditors"]
+      },
+      {
+        "before": ["<C-k>"],
+        "commands": ["editor.action.triggerParameterHints"]
+      },
+      {
+        "before": ["<leader>", "m"],
+        "commands": ["bookmarks.toggle"]
+      },
+      {
+        "before": ["<leader>", "b", "l"],
+        "commands": ["bookmarks.listFromAllFiles"]
+      },
+      {
+        "before": ["<leader>", "f"],
+        "commands": ["editor.action.formatDocument"]
+      },
+      {
+        "before": ["<leader>", "t", "f"],
+        "commands": ["workbench.action.quickOpen"]
+      },
+      {
+        "before": ["<leader>", "t", "g"],
+        "commands": ["workbench.action.findInFiles"]
+      }
+    ],
+    "vim.insertModeKeyBindings": [
+      {
+        "before": ["<C-c>"],
+        "after": ["<Esc>"]
+      },
+      {
+        "before": ["<C-p>"],
+        "commands": ["editor.action.triggerParameterHints"]
+      },
+      {
+        "before": ["<C-k>"],
+        "commands": ["editor.action.triggerParameterHints"]
+      }
+    ],
+    "vim.visualModeKeyBindings": [
+    ],
+    "vim.commandLineModeKeyBindings": [
+    ],
+    "vim.timeout": 250,
+    "vim.smartRelativeLine": true,
+    "files.autoSave": "afterDelay",
+    "gitlens.blame.format": "${id}  ${author|15} ${date|16}",
+    "gitlens.defaultDateFormat": "YYYY-MM-DD HH:mm"
+}

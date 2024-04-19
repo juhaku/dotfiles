@@ -1,0 +1,121 @@
+"source ~/.vimrc
+let mapleader = " "
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=8
+" Do incremental searching.
+set incsearch
+set hlsearch
+set nu
+set rnu
+set ignorecase
+set smartcase
+set timeoutlen 250
+set idearefactormode=keep
+" set clipboard+=unnamed
+set ideastatusicon=gray
+
+""" Plugins
+set NERDTree
+set surround
+""" set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+sethandler <C-V> n:vim i:ide
+
+noremap <leader>y "+y
+noremap <leader>c "+c
+noremap <leader>x "+x
+noremap <leader>d "+d
+noremap <leader>p "+p
+noremap <leader>P "\"+P
+noremap <leader>Y <Action>(CopyReference)
+map <leader>hr <Action>(Vcs.RollbackChangedLines)
+
+imap <A-d> <C-o>dw
+imap <A-h> <C-w>
+imap <A-BS> <C-w>
+
+""" Plugin settingDTree
+-------------------
+let g:argtextobj_pairs="[:],{:},(:),<:>
+
+""" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
+""" Actions
+map <leader>rn <Action>(RenameElement)
+map <leader>gi <Action>(ImplementMethods)
+map <leader>go <Action>(OverrideMethods)
+map <leader>f <Action>(ReformatCode)
+""" map <leader>re <Action>(RecentFiles)
+""" map <C-p> <Action>(ParameterInfo)
+imap <C-k> <Action>(ParameterInfo)
+map <C-k> <Action>(ParameterInfo)
+map <A-k> <Action>(MoveStatementUp)
+map <A-j> <Action>(MoveStatementDown)
+map <C-W>q :q<CR>
+nmap <leader>w <Action>(SaveAll)
+map <leader>e :NERDTreeToggle<CR>
+map <leader>E :NERDTreeFind<CR>
+map <leader>n :noh<CR>
+""" map gh <Action>(QuickJavaDoc)
+map K <Action>(QuickJavaDoc)
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>B <Action>(AddConditionalBreakpoint)
+map gi <Action>(GotoImplementation)
+map tn <Action>(GotoClass)
+map tf <Action>(GotoFile)
+map tg <Action>(FindInPath)
+""" map gr <Action>(ShowUsages) --- does not work in ideavim
+map <A-o> <Action>(PreviousTab)
+map <A-i> <Action>(NextTab)
+
+map tc <Action>(CloseContent)
+map to <Action>(CloseAllEditorsButActive)
+map ta <Action>(CloseAllEditors)
+map <leader>qa <Action>(Exit)
+map <leader>qp <Action>(CloseProject)
+""" map <leader>ef <Action>(SelectInProjectView)
+""" map <leader>E <Action>(ActivateProjectToolWindow)
+map <C-j> <Action>(List-selectNextRow)
+map <C-k> <Action>(List-selectPreviousRow)
+
+map ]d <Action>(GotoNextError)
+map [d <Action>(GotoPreviousError)
+map ]c <Action>(VcsShowNextChangeMarker)
+map [c <Action>(VscShowPreviousChangeMarker)
+map <leader>gb <Action>(Annotate)
+vmap * *<ESC>
+vmap # #<ESC>
+""" Mappings --------------------------------
+"""map <leader>f <Plug>(easy"""motion-s)
+"""map <leader>e <Plug>(easy"""motion-f)
+
+"""map <leader>d <Action>(Debug)
+"""map <leader>r <Action>(RenameElement)
+"""map <leader>c <Action>(Stop)
+"""map <leader>z <Action>(ToggleDistractionFree"""mode)
+
+"""map <leader>s <Action>(SelectInProjectView)
+"""map <leader>a <Action>(Annotate)
+"""map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+"""map <S-Space> <Action>(GotoNextError)
+
+"""map <leader>o <Action>(FileStructurePopup)

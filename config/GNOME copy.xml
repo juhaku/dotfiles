@@ -1,0 +1,6 @@
+<keymap version="1" name="GNOME copy" parent="Default for GNOME">
+  <action id="EditorEscape">
+    <keyboard-shortcut first-keystroke="escape" />
+    <keyboard-shortcut first-keystroke="alt quote" />
+  </action>
+</keymap>
