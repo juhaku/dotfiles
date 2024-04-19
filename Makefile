@@ -164,6 +164,7 @@ endif
 
 setup-code-configs:
 	@echo "Setup vscode configs"
+	mkdir -p ~/.config/Code/User/
 	cp ./config/code/keybindings.json ~/.config/Code/User/keybindings.json
 	cp ./config/code/settings.json ~/.config/Code/User/settings.json
 
