@@ -109,8 +109,11 @@ create-breeze-adwaita-icons: install-system-packages
 
 setup-nerd-font:
 	@echo "Setup nerd font, change the font with parameter: font=... e.g. font=$(font)"
-	$(shell curl -o ~/Downloads/$(font-name).zip -sSL $(font) && unzip -d ~/Downloads/$(font-name) ~/Downloads/$(font-name).zip &&\
-		sudo cp -r ~/Downloads/$(font-name) /usr/share/fonts && sudo fc-cache -f -v; rm -r ~/Downloads/$(font-name)*)
+	curl -o ~/Downloads/$(font-name).zip -sSL $(font)
+	unzip -d ~/Downloads/$(font-name) ~/Downloads/$(font-name).zip
+	sudo cp -r ~/Downloads/$(font-name) /usr/share/fonts
+	sudo fc-cache -f -v
+	rm -r ~/Downloads/$(font-name)*
 
 ifeq ($(wayland),true)
 configure-spotify: install-system-packages
