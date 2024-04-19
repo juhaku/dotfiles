@@ -51,7 +51,7 @@ install-paru:
 install-rust-toolchain: install-paru
 	@echo "Install rust toolchain"
 	paru -S $(PACMAN_FLAGS) rustup
-	rustup intall stable nightly
+	rustup install stable nightly
 
 # install nvidia and configure nvidia with wayland and suspend
 install-nvidia: install-paru
