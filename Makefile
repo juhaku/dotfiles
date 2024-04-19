@@ -101,9 +101,9 @@ set-environment: install-system-packages
 create-breeze-adwaita-icons: install-system-packages
 	@echo "Create breeze-dark-adwaita flavor icon theme"
 	sudo cp -r $(ICONS_DIR)/breeze-dark $(ICONS_DIR)/breeze-dark-adwaita
-	$(foreach icon, $(ICONS), find $(ICONS_DIR)/breeze-dark-adwaita/ -name "*$(icon)*" -exec sudo rm {} \; ) 
+	$(foreach icon, $(ICONS), find $(ICONS_DIR)/breeze-dark-adwaita/ -name "*$(icon)*" -exec sudo rm {} \;; ) 
 	sudo mkdir -p $(ICONS_DIR)/breeze-dark-adwaita/symbolic/ui/
-	$(foreach icon, $(ICONS), find $(ICONS_DIR)/Adwaita/ -name "*$(icon)-symbolic.svg" -exec sudo cp {} $(ICONS_DIR)/breeze-dark-adwaita/symbolic/ui/$(icon)-symbolic.svg \; )
+	$(foreach icon, $(ICONS), find $(ICONS_DIR)/Adwaita/ -name "*$(icon)-symbolic.svg" -exec sudo cp {} $(ICONS_DIR)/breeze-dark-adwaita/symbolic/ui/$(icon)-symbolic.svg \;; )
 	sudo sed -i 's/Name=.*/Name=Breeze Dark Adwaita/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
 	sudo sed -i 's/Comment=.*/Comment=Breeze Dark Adwaita by Juha/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
 
