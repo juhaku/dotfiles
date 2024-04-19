@@ -154,6 +154,7 @@ ifdef host
 else
 	@echo "Enter ssh host: "; read host; scp $$host:~/sshconfig.zip ~/Downloads/
 endif
+	unzip -d ~/Downloads/sshconfig/ ~/Downloads/sshconfig.zip
 	cp ~/Downloads/sshconfig/* ~/.ssh/
 	rm -r ~/Downloads/sshconfig*
 else
