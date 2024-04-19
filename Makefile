@@ -25,7 +25,7 @@ kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmon
 	fcitx5-configtool plasma-browser-integration
 
 flavor-apps = $(shell if [[ "$(FLAVOR)" == "GNOME" ]]; then echo $(gnome-applist); elif [[ "$(FLAVOR)" == "KDE" ]]; then echo $(kde-applist); fi)
-applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegram-desktop rustup zsh \
+applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegram-desktop zsh \
 		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
 		libreoffice-fresh maven yarn visual-studio-code-bin \
@@ -36,7 +36,7 @@ $(shell cmd=$$(command -v $(1)); if test -x $${cmd:-""}; then echo true; else ec
 endef
 
 # install system packages
-install-system-packages: install-paru
+install-system-packages: install-rust-toolchain
 	@echo "Install system packages"
 	paru $(PACMAN_FLAGS) -S $(applist)
 	xdg-mime default org.gnome.Nautilus.desktop inode/directory
@@ -48,8 +48,9 @@ install-paru:
 	$(shell if ! test -l /usr/bin/yay; then sudo ln -s /usr/bin/paru /usr/bin/yay; fi)
 
 # install and configure rust
-install-rust-toolchain: install-system-packages
+install-rust-toolchain: install-paru
 	@echo "Install rust toolchain"
+	paru -S $(PACMAN_FLAGS) rustup
 	rustup intall stable nightly
 
 # install nvidia and configure nvidia with wayland and suspend
@@ -58,7 +59,7 @@ install-nvidia: install-paru
 	paru -S $(PACMAN_FLAGS) nvidia-inst
 	nvidia-inst
 	sudo systemctl enable nvidia-resume.service nvidia-suspend.service nvidia-hibernate.service
-	sudo echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_TemporaryFilePath=/tmp" >> /lib/modprobe.d/system.conf
+	echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_TemporaryFilePath=/tmp" | sudo tee -a /lib/modprobe.d/system.conf
 	sudo dracut --force
 	sudo ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
 
@@ -73,7 +74,7 @@ setup-ssh:
 	@echo "Setup ssh agent"
 	systemctl enable --user gcr-ssh-agent.socket
 	systemctl start --user gcr-ssh-agent.socket
-	echo 'export SSH_AUTH_SOCK=$$XDG_RUNTIME_DIR/gcr/ssh' > .zprofile
+	echo 'export SSH_AUTH_SOCK=$$XDG_RUNTIME_DIR/gcr/ssh' | tee .zprofile
 
 # set time locale to en_GB
 set-time-locale: 
@@ -89,10 +90,10 @@ setup-bluetooth:
 # set global environment variables
 set-environment: install-system-packages
 	@echo "Set qt environment"
-	sudo echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
-	sudo echo "QT_WAYLAND_DECORATION=adwaita" >> /etc/environment
+	echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
+	echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment
 	@echo "Set ibus environment"
-	sudo echo -e "GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus" >> /etc/environment
+	sudo echo -e "GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus" | sudo tee -a /etc/environment
 	@echo "Change editor to neovim"
 	sudo sed -i 's/EDITOR=.*/EDITOR=nvim/' /etc/environment
 
@@ -121,7 +122,7 @@ configure-spotify:
 endif
 
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) set-environment \
-	create-breeze-adwaita-icons install-rust-toolchain setup-terminal setup-ssh \
+	create-breeze-adwaita-icons setup-terminal setup-ssh \
 	setup-nerd-font configure-spotify
 	@echo "Done!, Reboot recommended to take configuration changes effect"
 
