@@ -135,9 +135,9 @@ setup-git-configs:
 	@echo "Setup git configs"
 	mkdir -p ~/.config/git/
 	cp ./config/gitconfig ~/.config/git/config
-	sed -i "s/{user}/$(USER)/" ~/.config/git/config
+	sed -i "s/\{user\}/$(USER)/" ~/.config/git/config
 ifdef email
-	sed -i "/{email}/$(email)/" ~/.config/git/config
+	sed -i "/\{email\}/$(email)/" ~/.config/git/config
 else
 	@echo "Enter email for git config: "; read -r email; sed -i "/{email}/$$email/" ~/.config/git/config
 endif
