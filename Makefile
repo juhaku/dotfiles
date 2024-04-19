@@ -171,8 +171,8 @@ setup-code-configs:
 setup-idea-configs:
 	@echo "Setup intellij configs"
 	cp ./config/.ideavimrc ~/.ideavimrc
+	mkdir -p ~/.config/JetBrains/keymaps/
 	idea_dir=$$(ls -t ~/.config/JetBrains/ | xargs | awk '{print $$1}'); \
-		mkdir -p ~/.config/JetBrains/keymaps/; \
 		cp ./config/'GNOME copy.xml' ~/.config/JetBrains/$$idea_dir/keymaps/'GNOME copy.xml'
 
 setup-alacritty:
