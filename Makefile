@@ -65,8 +65,8 @@ install-nvidia: install-paru
 
 setup-terminal:
 	@echo "Setup terminal"
-	$(shell -c "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh")
-	$(shell curl -sS https://starship.rs/install.sh | sh)
+	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+	curl -sS https://starship.rs/install.sh | sh
 	cp ./config/starship.toml ~/.config/starship.toml
 
 # setup ssh agent
