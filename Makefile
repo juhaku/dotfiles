@@ -148,7 +148,7 @@ host=
 ifeq ($(ssh),true)
 copy-ssh-configs:
 	@echo "Setup ssh configs"
-	mkdir ~/.ssh
+	mkdir -p ~/.ssh
 ifdef host
 	scp $(host):~/sshconfig.zip ~/Downloads/
 else
