@@ -139,7 +139,7 @@ setup-git-configs:
 ifdef email
 	sed -i "/\{email\}/$(email)/" ~/.config/git/config
 else
-	@echo "Enter email for git config: "; read -r email; sed -i "/{email}/$$email/" ~/.config/git/config
+	@echo "Enter email for git config: "; read -r email; sed -i "/\{email\}/$$email/" ~/.config/git/config
 endif
 
 ssh=true
