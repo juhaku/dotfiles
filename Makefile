@@ -65,7 +65,7 @@ install-nvidia: install-paru
 
 setup-terminal:
 	@echo "Setup terminal"
-	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 	curl -sS https://starship.rs/install.sh | sh
 	cp ./config/starship.toml ~/.config/starship.toml
 
@@ -189,13 +189,13 @@ setup-zshrc:
 setup-neovim:
 	@echo "Setup neovim"
 	git clone git@github.com:juhaku/nvim.git ~/.config/nvim
-	mkdir -p ~/.local/share/nvim/jdtls-libs
-	mkdir -p ~/.local/share/nvim/jdtls
-	$(shell pushd ~/.local/share/nvim/jdtls-libs && git clone https://github.com/microsoft/java-debug && cd java-debug &&\
-		./mvnw clean install)
-	$(shell pushd ~/.local/share/nvim/jdtls-libs && git clone https://github.com/microsoft/vscode-java-test && cd vscode-java-test &&\
-		npm install && npm run build-plugin)
-	$(shell curl -sSL -o ~/.local/share/nvim/jdtls-libs/lombok.jar https://projectlombok.org/downloads/lombok.jar)
+	mkdir -p ~/.local/share/nvim/jdtls-libs/
+	mkdir -p ~/.local/share/nvim/jdtls/
+	cd ~/.local/share/nvim/jdtls-libs && git clone https://github.com/microsoft/java-debug && cd java-debug &&\
+		./mvnw clean install
+	cd ~/.local/share/nvim/jdtls-libs && git clone https://github.com/microsoft/vscode-java-test && cd vscode-java-test &&\
+		npm install && npm run build-plugin
+	curl -sSL -o ~/.local/share/nvim/jdtls-libs/lombok.jar https://projectlombok.org/downloads/lombok.jar
 
 dev-setup: setup-git-configs copy-ssh-configs setup-code-configs setup-idea-configs setup-alacritty setup-zshrc setup-neovim
 	@echo "Done, Happy coding  !"
