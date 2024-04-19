@@ -61,6 +61,7 @@ install-rust-toolchain: install-system-packages
 # install nvidia and configure nvidia with wayland and suspend
 install-nvidia: install-paru
 	@echo "Install and configure nvidia for wayland"
+	paru -S $(PACMAN_FLAGS) nvidia-inst
 	nvidia-inst
 	sudo systemctl enable nvidia-resume.service nvidia-suspend.service nvidia-hibernate.service
 	sudo echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_TemporaryFilePath=/tmp" >> /lib/modprobe.d/system.conf
