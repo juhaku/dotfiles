@@ -15,6 +15,7 @@ Target x11 with argument `wayland=false`.
 ```make
 make install
 ```
+Or just simply `make` as the `install` is the default goal.
 
 ## setup dev environment
 

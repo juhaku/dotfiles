@@ -1,3 +1,4 @@
+.DEFAULT_GOAL = install
 SHELL = /bin/bash
 
 FLAVOR = $(shell echo $$XDG_CURRENT_DESKTOP)
