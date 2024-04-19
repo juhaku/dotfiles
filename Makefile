@@ -131,7 +131,7 @@ install: setup-bluetooth set-time-locale $(nvidia-prerequisite) set-environment 
 
 email=
 
-setup-git-config:
+setup-git-configs:
 	@echo "Setup git configs"
 	mkdir -p ~/.config/git/
 	cp ./config/gitconfig ~/.config/git/config
@@ -181,6 +181,7 @@ setup-alacritty:
 
 setup-zshrc:
 	@echo "Setup zshrc"
+	chsh -s $$(which zsh)
 	cp ./config/.zshrc ~/.zshrc
 
 setup-neovim:
