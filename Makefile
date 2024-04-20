@@ -42,6 +42,7 @@ endef
 install-system-packages: install-rust-toolchain
 	@echo -e "$(LIGHT_GREEN)Install system packages$(NOCOLOR)"
 	paru $(PACMAN_FLAGS) -S $(applist)
+	sudo ufw enable
 
 # install paru and alias it as yay if yay is not intalled
 install-paru:
@@ -166,7 +167,7 @@ setup-zshrc:
 
 setup-neovim:
 	@echo -e "$(LIGHT_GREEN)Setup neovim$(NOCOLOR)"
-	git clone git@github.com:juhaku/nvim.git ~/.config/nvim
+	git clone $(shell if [[ $(ssh) == true ]]; then echo git@github.com:juhaku/nvim.git; else echo https://github.com/juhaku/nvim; fi) ~/.config/nvim
 	mkdir -p ~/.local/share/nvim/jdtls-libs/
 	mkdir -p ~/.local/share/nvim/jdtls/
 	cd ~/.local/share/nvim/jdtls-libs && git clone https://github.com/microsoft/java-debug && cd java-debug &&\

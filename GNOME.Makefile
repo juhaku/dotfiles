@@ -27,8 +27,15 @@ create-breeze-adwaita-icons: install-system-packages
 	sudo sed -i 's/Name=.*/Name=Breeze Dark Adwaita/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
 	sudo sed -i 's/Comment=.*/Comment=Breeze Dark Adwaita by Juha/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
 
+setup-kvantum:
+	@echo -e "$(LIGHT_GREEN)Setup kvantum configs$(NOCOLOR)"
+	mkdir -p ~/.config/qt6ct/
+	mkdir -p ~/.config/Kvantum/
+	cp ./config/qt6ct.conf ~/.config/qt6ct/qt6ct.conf
+	cp ./config/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
+
 # Gnome specific configuration
-configure: set-environment create-breeze-adwaita-icons setup-ssh
+configure: set-environment create-breeze-adwaita-icons setup-kvantum setup-ssh
 	@echo -e "$(LIGHT_GREEN)Configure $(FLAVOR) specific settings$(NOCOLOR)"
 	xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
