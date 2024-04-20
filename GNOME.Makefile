@@ -36,6 +36,6 @@ setup-kvantum:
 
 # Gnome specific configuration
 configure: set-environment create-breeze-adwaita-icons setup-kvantum setup-ssh
-	@echo -e "$(LIGHT_GREEN)Configure $(FLAVOR) specific settings$(NOCOLOR)"
 	xdg-mime default org.gnome.Nautilus.desktop inode/directory
+	@echo -e "$(LIGHT_GREEN)Done configuring $(FLAVOR)$(NOCOLOR)"
 

@@ -25,7 +25,7 @@ gnome-applist = okular konsole ibus-libpinyin dconf-editor \
 	gnome-browser-connector gparted appimagelauncher-bin
 
 kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmonitor fcitx5-chinese-addons \
-	fcitx5-configtool plasma-browser-integration
+	fcitx5-configtool plasma-browser-integration xdg-desktop-portal xdg-desktop-portal-kde kwalletmanager
 
 flavor-apps = $(shell if [[ "$(FLAVOR)" == "GNOME" ]]; then echo $(gnome-applist); elif [[ "$(FLAVOR)" == "KDE" ]]; then echo $(kde-applist); fi)
 applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegram-desktop zsh \
@@ -74,6 +74,7 @@ setup-terminal: install-system-packages
 
 # extended flavor specific configuration
 configure:
+	@echo -e "$(LIGHT_GREEN)Configure $(FLAVOR) specific settings$(NOCOLOR)"
 	@if test -f $(FLAVOR).Makefile; then $(MAKE) -f $(FLAVOR).Makefile $@; else echo -e "$(LIGHT_YELLOW)No $(FLAVOR).Makefile found$(NOCOLOR)"; fi
 
 # set time locale to en_GB
