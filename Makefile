@@ -7,6 +7,9 @@ ICONS_DIR = /usr/share/icons
 ICONS = window-close window-minimize window-maximize
 IS_WAYLAND = $(shell if [[ "$$XDG_SESSION_TYPE" == "wayland" ]]; then echo true; else echo false; fi)
 USER = $(shell cat /etc/passwd | grep $$(whoami) | awk -F : '{print $$5}')
+LIGHT_GREEN = \e[92m
+LIGHT_YELLOW = \e[93m
+NOCOLOR = \e[0m
 
 # default font
 font = https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/SourceCodePro.zip
@@ -37,25 +40,24 @@ endef
 
 # install system packages
 install-system-packages: install-rust-toolchain
-	@echo "Install system packages"
+	@echo -e "$(LIGHT_GREEN)Install system packages$(NOCOLOR)"
 	paru $(PACMAN_FLAGS) -S $(applist)
-	xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
 # install paru and alias it as yay if yay is not intalled
 install-paru:
-	@echo "Install paru"
+	@echo -e "$(LIGHT_GREEN)Install paru$(NOCOLOR)"
 	sudo pacman $(PACMAN_FLAGS) -S paru
 	$(shell if ! test -l /usr/bin/yay; then sudo ln -s /usr/bin/paru /usr/bin/yay; fi)
 
 # install and configure rust
 install-rust-toolchain: install-paru
-	@echo "Install rust toolchain"
+	@echo -e "$(LIGHT_GREEN)Install rust toolchain$(NOCOLOR)"
 	paru -S $(PACMAN_FLAGS) rustup
 	rustup install stable nightly
 
 # install nvidia and configure nvidia with wayland and suspend
 install-nvidia: install-paru
-	@echo "Install and configure nvidia for wayland"
+	@echo -e "$(LIGHT_GREEN)Install and configure nvidia for wayland$(NOCOLOR)"
 	paru -S $(PACMAN_FLAGS) nvidia-inst
 	nvidia-inst
 	sudo systemctl enable nvidia-resume.service nvidia-suspend.service nvidia-hibernate.service
@@ -64,51 +66,28 @@ install-nvidia: install-paru
 	sudo ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
 
 setup-terminal:
-	@echo "Setup terminal"
+	@echo -e "$(LIGHT_GREEN)Setup terminal$(NOCOLOR)"
 	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 	curl -sS https://starship.rs/install.sh | sh
 	cp ./config/starship.toml ~/.config/starship.toml
 
-# setup ssh agent
-setup-ssh:
-	@echo "Setup ssh agent"
-	systemctl enable --user gcr-ssh-agent.socket
-	systemctl start --user gcr-ssh-agent.socket
-	echo 'export SSH_AUTH_SOCK=$$XDG_RUNTIME_DIR/gcr/ssh' | tee ~/.zprofile
+# extended flavor specific configuration
+configure:
+	@if test -f $(FLAVOR).Makefile; then $(MAKE) -f $(FLAVOR).Makefile $@; else echo -e "$(LIGHT_YELLOW)No $(FLAVOR).Makefile found$(NOCOLOR)"; fi
 
 # set time locale to en_GB
 set-time-locale: 
-	@echo "Set time locale to match up rest of the system, using en_GB"
+	@echo -e "$(LIGHT_GREEN)Set time locale to match up rest of the system, using en_GB$(NOCOLOR)"
 	localectl set-locale "LC_TIME=en_GB.UTF-8"
 
 # enable bluetooth
 setup-bluetooth: 
-	@echo "Enable bluetooth"
+	@echo -e "$(LIGHT_GREEN)Enable bluetooth$(NOCOLOR)"
 	sudo systemctl enable bluetooth.service
 	sudo systemctl start bluetooth.service
 
-# set global environment variables
-set-environment: install-system-packages
-	@echo "Set qt environment"
-	echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
-	echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment
-	@echo "Set ibus environment"
-	sudo echo -e "GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus" | sudo tee -a /etc/environment
-	@echo "Change editor to neovim"
-	sudo sed -i 's/EDITOR=.*/EDITOR=nvim/' /etc/environment
-
-# create breeze-dark-adwaita flavor ionc theme
-create-breeze-adwaita-icons: install-system-packages
-	@echo "Create breeze-dark-adwaita flavor icon theme"
-	sudo cp -r $(ICONS_DIR)/breeze-dark $(ICONS_DIR)/breeze-dark-adwaita
-	$(foreach icon, $(ICONS), find $(ICONS_DIR)/breeze-dark-adwaita/ -name "*$(icon)*" -exec sudo rm {} \;; ) 
-	sudo mkdir -p $(ICONS_DIR)/breeze-dark-adwaita/symbolic/ui/
-	$(foreach icon, $(ICONS), find $(ICONS_DIR)/Adwaita/ -name "*$(icon)-symbolic.svg" -exec sudo cp {} $(ICONS_DIR)/breeze-dark-adwaita/symbolic/ui/$(icon)-symbolic.svg \;; )
-	sudo sed -i 's/Name=.*/Name=Breeze Dark Adwaita/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
-	sudo sed -i 's/Comment=.*/Comment=Breeze Dark Adwaita by Juha/g' $(ICONS_DIR)/breeze-dark-adwaita/index.theme
-
 setup-nerd-font:
-	@echo "Setup nerd font, change the font with parameter: font=... e.g. font=$(font)"
+	@echo -e "$(LIGHT_GREEN)Setup nerd font, change the font with parameter: font=... e.g. font=$(font)$(NOCOLOR)"
 	curl -o ~/Downloads/$(font-name).zip -sSL $(font)
 	unzip -d ~/Downloads/$(font-name) ~/Downloads/$(font-name).zip
 	sudo cp -r ~/Downloads/$(font-name) /usr/share/fonts
@@ -117,29 +96,28 @@ setup-nerd-font:
 
 ifeq ($(wayland),true)
 configure-spotify: install-system-packages
-	@echo "Configure spotify support wayland"
+	@echo -e "$(LIGHT_GREEN)Configure spotify support wayland$(NOCOLOR)"
 	sudo sed -i 's/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/' /usr/share/applications/spotify.desktop
 else
 configure-spotify:
-	@echo "Wayland set to false, skipping configure spotify"
+	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure spotify$(NOCOLOR)"
 endif
 
-install: setup-bluetooth set-time-locale $(nvidia-prerequisite) set-environment \
-	create-breeze-adwaita-icons setup-terminal setup-ssh \
+install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
 	setup-nerd-font configure-spotify
-	@echo "Done!, Reboot recommended to take configuration changes effect"
+	@echo -e "$(LIGHT_GREEN)Done!, Reboot recommended to take configuration changes effect$(NOCOLOR)"
 
 email=
 
 setup-git-configs:
-	@echo "Setup git configs"
+	@echo -e "$(LIGHT_GREEN)Setup git configs$(NOCOLOR)"
 	mkdir -p ~/.config/git/
 	cp ./config/gitconfig ~/.config/git/config
 	sed -i "s/{user}/$(USER)/" ~/.config/git/config
 ifdef email
 	sed -i "s/{email}/$(email)/" ~/.config/git/config
 else
-	@echo "Enter email for git config: "; read email; sed -i "s/{email}/$$email/" ~/.config/git/config
+	@echo -n "Enter email for git config: "; read email; sed -i "s/{email}/$$email/" ~/.config/git/config
 endif
 
 ssh=true
@@ -147,47 +125,47 @@ host=
 
 ifeq ($(ssh),true)
 copy-ssh-configs:
-	@echo "Setup ssh configs"
+	@echo -e "$(LIGHT_GREEN)Setup ssh configs$(NOCOLOR)"
 	mkdir -p ~/.ssh
 ifdef host
 	scp $(host):~/sshconfig.zip ~/Downloads/
 else
-	@echo "Enter ssh host: "; read host; scp $$host:~/sshconfig.zip ~/Downloads/
+	@echo -n "Enter ssh host: "; read host; scp $$host:~/sshconfig.zip ~/Downloads/
 endif
 	unzip -d ~/Downloads/sshconfig/ ~/Downloads/sshconfig.zip
 	cp ~/Downloads/sshconfig/* ~/.ssh/
 	rm -r ~/Downloads/sshconfig*
 else
 copy-ssh-configs:
-	@echo "Skipping ssh setup"
+	@echo -e "$(LIGHT_GREEN)Skipping ssh setup$(NOCOLOR)"
 endif
 
 setup-code-configs:
-	@echo "Setup vscode configs"
+	@echo -e "$(LIGHT_GREEN)Setup vscode configs$(NOCOLOR)"
 	mkdir -p ~/.config/Code/User/
 	cp ./config/code/keybindings.json ~/.config/Code/User/keybindings.json
 	cp ./config/code/settings.json ~/.config/Code/User/settings.json
 
 setup-idea-configs:
-	@echo "Setup intellij configs"
+	@echo -e "$(LIGHT_GREEN)Setup intellij configs$(NOCOLOR)"
 	cp ./config/.ideavimrc ~/.ideavimrc
 	idea_dir=$$(ls -t ~/.config/JetBrains/ | xargs | awk '{print $$1}'); \
 		mkdir -p ~/.config/JetBrains/$$idea_dir/keymaps/; \
 		cp ./config/'GNOME copy.xml' ~/.config/JetBrains/$$idea_dir/keymaps/'GNOME copy.xml'
 
 setup-alacritty:
-	@echo "Setup alacritty"
+	@echo -e "$(LIGHT_GREEN)Setup alacritty$(NOCOLOR)"
 	mkdir -p ~/.config/alacritty/
 	cp ./config/alacritty.toml ~/.config/alacritty/alacritty.toml
 	mkdir -p ~/.config/alacritty/themes && git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 
 setup-zshrc:
-	@echo "Setup zshrc"
+	@echo -e "$(LIGHT_GREEN)Setup zshrc$(NOCOLOR)"
 	chsh -s $$(which zsh)
 	cp ./config/.zshrc ~/.zshrc
 
 setup-neovim:
-	@echo "Setup neovim"
+	@echo -e "$(LIGHT_GREEN)Setup neovim$(NOCOLOR)"
 	git clone git@github.com:juhaku/nvim.git ~/.config/nvim
 	mkdir -p ~/.local/share/nvim/jdtls-libs/
 	mkdir -p ~/.local/share/nvim/jdtls/
@@ -197,6 +175,11 @@ setup-neovim:
 		npm install && npm run build-plugin
 	curl -sSL -o ~/.local/share/nvim/jdtls-libs/lombok.jar https://projectlombok.org/downloads/lombok.jar
 
-dev-setup: setup-git-configs copy-ssh-configs setup-code-configs setup-idea-configs setup-alacritty setup-zshrc setup-neovim
-	@echo "Done, Happy coding  !"
+install-watchmux:
+	@echo -e "$(LIGHT_GREEN)Install watchmux$(NOCOLOR)"
+	cargo install --git https://github.com/juhaku/watchmux
+
+dev-setup: setup-git-configs copy-ssh-configs setup-code-configs setup-idea-configs setup-alacritty setup-zshrc \
+	install-watchmux setup-neovim
+	@echo -e "$(LIGHT_GREEN)Done, Happy coding  !$(NOCOLOR)"
 
