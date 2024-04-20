@@ -65,7 +65,7 @@ install-nvidia: install-paru
 	sudo dracut --force
 	sudo ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
 
-setup-terminal:
+setup-terminal: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Setup terminal$(NOCOLOR)"
 	curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 	curl -sS https://starship.rs/install.sh | sh
