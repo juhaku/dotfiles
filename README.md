@@ -19,11 +19,13 @@ Or just simply `make` as the `install` is the default goal.
 
 ## setup dev environment
 
-Follwing command will setup full dev environment with configuring various tools needed for development work.
+Following command will setup full dev environment with configuring various tools needed for development work.
 
-You can skip ssh setup with argument `ssh=false`.
-
+Skip ssh setup with argument `ssh=false`.
 Define `host=...` arugment to copy ssh configs from for `dev-setup` command in order to configure ssh.
+
+Define custom terminal for tmux with `terminal=...` if not defined, the current terminal will be used from `$TERM` env variable.
+
 ```make
 make dev-setup
 ```

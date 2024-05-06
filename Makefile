@@ -19,6 +19,7 @@ nvidia=true
 nvidia-prerequisite = $(if $(shell if [[ $(nvidia) == true ]]; then echo true; else echo ""; fi), install-nvidia)
 slack-app = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),slack-desktop-wayland,slack-desktop)
 clipboard-util = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),wl-clipboard,xclip)
+terminal = $(shell echo $$TERM)
 
 gnome-applist = okular konsole ibus-libpinyin dconf-editor \
 	breeze-icons kvantum qt5ct qt6ct qadwaitadecorations-qt6 \
@@ -32,7 +33,7 @@ applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegra
 		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
 		libreoffice-fresh maven yarn visual-studio-code-bin \
-		intellij-idea-community-edition clang gimp git tig jq ufw
+		intellij-idea-community-edition clang gimp git tig jq ufw tmux
 
 define app_installed =
 $(shell cmd=$$(command -v $(1)); if test -x $${cmd:-""}; then echo true; else echo false; fi)
@@ -100,13 +101,23 @@ ifeq ($(wayland),true)
 configure-spotify: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Configure spotify support wayland$(NOCOLOR)"
 	sudo sed -i 's/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/' /usr/share/applications/spotify.desktop
+	sudo cp ./config/fix-wayland-spotify.hook /usr/share/libalpm/hooks/fix-wayland-spotify.hook
 else
 configure-spotify:
 	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure spotify$(NOCOLOR)"
 endif
 
+ifeq ($(wayland),true)
+configure-code: install-system-packages
+	@echo -e "$(LIGHT_GREEN)Configure code support wayland$(NOCOLOR)"
+	sudo cp ./config/fix-wayland-code.hook /usr/share/libalpm/hooks/fix-wayland-code.hook
+else
+configure-code:
+	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure code$(NOCOLOR)"
+endif
+
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
-	setup-nerd-font configure-spotify
+	setup-nerd-font configure-spotify configure-code
 	@echo -e "$(LIGHT_GREEN)Done!, Reboot recommended to take configuration changes effect$(NOCOLOR)"
 
 email=
@@ -181,7 +192,13 @@ install-watchmux:
 	@echo -e "$(LIGHT_GREEN)Install watchmux$(NOCOLOR)"
 	cargo install --git https://github.com/juhaku/watchmux
 
+setup-tmux:
+	@echo -e "$(LIGHT_GREEN)Setup tmux$(NOCOLOR)"
+	mkdir -p ~/.config/tmux
+	cp ./config/.tmux.conf ~/.config/tmux/tmux.conf
+	sed -i "s/{terminal}/$(terminal)/g" ~/.config/tmux/tmux.conf
+
 dev-setup: setup-git-configs copy-ssh-configs setup-code-configs setup-idea-configs setup-alacritty setup-zshrc \
-	install-watchmux setup-neovim
+	install-watchmux setup-neovim setup-tmux
 	@echo -e "$(LIGHT_GREEN)Done, Happy coding  !$(NOCOLOR)"
 

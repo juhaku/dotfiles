@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = visual-studio-code-bin
+
+[Action]
+Description = Fix wayland setup for visual-studio-code-bin
+When = PostTransaction
+#Exec = /bin/sed -i "s/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/" /usr/share/applications/spotify.desktop
+Exec = /bin/sed -i "s/Exec=.*/Exec=\/usr\/bin\/code --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations %F/" /usr/share/applications/code.desktop
+Depends = visual-studio-code-bin

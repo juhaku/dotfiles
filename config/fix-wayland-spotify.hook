@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = spotify
+
+[Action]
+Description = Fix wayland setup for spotify
+When = PostTransaction
+Exec = /bin/sed -i "s/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/" /usr/share/applications/spotify.desktop
+Depends = spotify
