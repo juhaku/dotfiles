@@ -107,6 +107,7 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
 alias ls=eza
+alias tv='tmux new-session nvim'
 
 eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
