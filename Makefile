@@ -97,15 +97,17 @@ setup-nerd-font:
 	sudo fc-cache -f -v
 	rm -r ~/Downloads/$(font-name)*
 
-ifeq ($(wayland),true)
-configure-spotify: install-system-packages
-	@echo -e "$(LIGHT_GREEN)Configure spotify support wayland$(NOCOLOR)"
-	sudo sed -i 's/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/' /usr/share/applications/spotify.desktop
-	sudo cp ./config/fix-wayland-spotify.hook /usr/share/libalpm/hooks/fix-wayland-spotify.hook
-else
+# ifeq ($(wayland),true)
+# configure-spotify: install-system-packages
+# 	@echo -e "$(LIGHT_GREEN)Configure spotify support wayland$(NOCOLOR)"
+# 	sudo sed -i 's/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/' /usr/share/applications/spotify.desktop
+# 	sudo cp ./config/fix-wayland-spotify.hook /usr/share/libalpm/hooks/fix-wayland-spotify.hook
+# else
+# configure-spotify:
+# 	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure spotify$(NOCOLOR)"
+# endif
 configure-spotify:
-	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure spotify$(NOCOLOR)"
-endif
+	@echo -e "$(LIGHT_GREEN)Configure spotify: No op...$(NOCOLOR)"
 
 ifeq ($(wayland),true)
 configure-code: install-system-packages
