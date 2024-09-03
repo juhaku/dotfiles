@@ -17,7 +17,7 @@ font-name = $(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}')
 wayland = true
 nvidia=true
 nvidia-prerequisite = $(if $(shell if [[ $(nvidia) == true ]]; then echo true; else echo ""; fi), install-nvidia)
-slack-app = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),slack-desktop-wayland,slack-desktop)
+# slack-app = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),slack-desktop-wayland,slack-desktop)
 clipboard-util = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),wl-clipboard,xclip)
 terminal = $(shell echo $$TERM)
 
@@ -29,7 +29,7 @@ kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmon
 	fcitx5-configtool plasma-browser-integration xdg-desktop-portal xdg-desktop-portal-kde kwalletmanager
 
 flavor-apps = $(shell if [[ "$(FLAVOR)" == "GNOME" ]]; then echo $(gnome-applist); elif [[ "$(FLAVOR)" == "KDE" ]]; then echo $(kde-applist); fi)
-applist = $(flavor-apps) neovim alacritty spotify $(slack-app) keepassxc telegram-desktop zsh \
+applist = $(flavor-apps) neovim alacritty spotify slack-desktop keepassxc telegram-desktop zsh \
 		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
 		libreoffice-fresh maven yarn visual-studio-code-bin \
