@@ -1,3 +1,4 @@
+[general]
 import = ["/home/juha/.config/alacritty/themes/themes/tokyo-night.toml"]
 
 [font]
@@ -18,5 +19,5 @@ family = "SauceCodePro Nerd Font"
 [selection]
 save_to_clipboard = true
 
-[window]
+# [window]
 # opacity = 0.7

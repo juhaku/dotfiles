@@ -17,7 +17,6 @@ font-name = $(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}')
 wayland = true
 nvidia=true
 nvidia-prerequisite = $(if $(shell if [[ $(nvidia) == true ]]; then echo true; else echo ""; fi), install-nvidia)
-# slack-app = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),slack-desktop-wayland,slack-desktop)
 clipboard-util = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),wl-clipboard,xclip)
 terminal = $(shell echo $$TERM)
 
@@ -97,18 +96,6 @@ setup-nerd-font:
 	sudo fc-cache -f -v
 	rm -r ~/Downloads/$(font-name)*
 
-# ifeq ($(wayland),true)
-# configure-spotify: install-system-packages
-# 	@echo -e "$(LIGHT_GREEN)Configure spotify support wayland$(NOCOLOR)"
-# 	sudo sed -i 's/Exec=.*/Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --uri=%U/' /usr/share/applications/spotify.desktop
-# 	sudo cp ./config/fix-wayland-spotify.hook /usr/share/libalpm/hooks/fix-wayland-spotify.hook
-# else
-# configure-spotify:
-# 	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure spotify$(NOCOLOR)"
-# endif
-configure-spotify:
-	@echo -e "$(LIGHT_GREEN)Configure spotify: No op...$(NOCOLOR)"
-
 ifeq ($(wayland),true)
 configure-code: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Configure code support wayland$(NOCOLOR)"
@@ -119,7 +106,7 @@ configure-code:
 endif
 
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
-	setup-nerd-font configure-spotify configure-code
+	setup-nerd-font configure-code
 	@echo -e "$(LIGHT_GREEN)Done!, Reboot recommended to take configuration changes effect$(NOCOLOR)"
 
 email=
