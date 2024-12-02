@@ -1,6 +1,3 @@
-[user]
-	email = {email}
-	name = {user}
 [core]
     editor = nvim
 	pager = delta
@@ -19,4 +16,5 @@
 [diff]
     #tool = vimdiff
     colorMoved = default
-
+[includeIf "gitdir:{dir}"]
+    path = ./private-config

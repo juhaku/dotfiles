@@ -1,0 +1,11 @@
+[user]
+    email = {email}
+    name = {name}
+    signingkey = {key}
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[tag]
+    gpgSign = true
+

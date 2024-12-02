@@ -115,11 +115,19 @@ setup-git-configs:
 	@echo -e "$(LIGHT_GREEN)Setup git configs$(NOCOLOR)"
 	mkdir -p ~/.config/git/
 	cp ./config/gitconfig ~/.config/git/config
+	cp ./config/private-config ~/.config/git/private-config
 	sed -i "s/{user}/$(USER)/" ~/.config/git/config
 ifdef email
-	sed -i "s/{email}/$(email)/" ~/.config/git/config
+	sed -i "s/{email}/$(email)/" ~/.config/git/private-config
 else
-	@echo -n "Enter email for git config: "; read email; sed -i "s/{email}/$$email/" ~/.config/git/config
+	@echo -n "Enter email for git config: "; read email; sed -i "s/{email}/$$email/" ~/.config/git/private-config
+endif
+	@echo -n "Enter private gitdir path: "; read dir; sed -i "s/{dir}/$$dir/" ~/.config/git/config
+ifeq ($(ssh),true)
+	@echo -n "Setup git signinkey path: "; read key; sed -i "s/{key}/$$key/" ~/.config/git/private-config
+else
+	@echo -e "$(LIGHT_YELLOW)Ssh disabled, cannot set git signingkey...$(NOCOLOR)"
+	sed -i "/signingkey/d" ~/.config/git/private-config
 endif
 
 ssh=true
