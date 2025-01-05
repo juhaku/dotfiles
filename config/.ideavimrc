@@ -15,6 +15,8 @@ set timeoutlen 250
 set idearefactormode=keep
 " set clipboard+=unnamed
 set ideastatusicon=gray
+" Disable visual bell
+set visualbell
 
 """ Plugins
 set NERDTree
