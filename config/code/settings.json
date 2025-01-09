@@ -23,6 +23,14 @@
       {
         "before": ["#"],
         "after": ["#", "<ESC>"]
+      },
+      {
+        "before": ["<C-d>"],
+        "after": ["<C-d>", "z", "z"]
+      },
+      {
+        "before": ["<C-u>"],
+        "after": ["<C-u>", "z", "z"]
       }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
@@ -145,6 +153,14 @@
       {
         "before": ["<leader>", "t", "g"],
         "commands": ["workbench.action.findInFiles"]
+      },
+      {
+        "before": ["<leader>", "p"],
+        "after": ["\"", "+", "p"]
+      },
+      {
+        "before": ["<leader>", "P"],
+        "after": ["\"", "+", "P"]
       }
     ],
     "vim.insertModeKeyBindings": [
@@ -161,7 +177,23 @@
         "commands": ["editor.action.triggerParameterHints"]
       }
     ],
-    "vim.visualModeKeyBindings": [
+    "vim.visualModeKeyBindingsNonRecursive": [
+      {
+        "before": ["<leader>", "y"],
+        "after": ["\"", "+", "y"]
+      },
+      {
+        "before": ["<leader>", "p"],
+        "after": ["\"", "+", "p"]
+      },
+      {
+        "before": ["<leader>", "P"],
+        "after": ["\"", "+", "P"]
+      },
+      {
+        "before": ["<leader>", "d"],
+        "after": ["\"", "+", "d"]
+      }
     ],
     "vim.commandLineModeKeyBindings": [
     ],
@@ -169,5 +201,24 @@
     "vim.smartRelativeLine": true,
     "files.autoSave": "afterDelay",
     "gitlens.blame.format": "${id}  ${author|15} ${date|16}",
-    "gitlens.defaultDateFormat": "YYYY-MM-DD HH:mm"
+    "gitlens.defaultDateFormat": "YYYY-MM-DD HH:mm",
+    "rust-analyzer.check.command": "clippy",
+    "gopls": {
+      "ui.semanticTokens": true
+    },
+    "[astro]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.inlayHints.enumMemberValues.enabled": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true,
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true
 }

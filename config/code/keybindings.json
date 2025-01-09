@@ -148,6 +148,21 @@
     "when": "vim.active && listFocus && filesExplorerFocus && !inputFocus"
   },
   {
+    "key": "y",
+    "command": "filesExplorer.copy",
+    "when": "vim.active && listFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "x",
+    "command": "filesExplorer.cut",
+    "when": "vim.active && listFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "p",
+    "command": "filesExplorer.paste",
+    "when": "vim.active && listFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
     "key": "ctrl+p",
     "command": "selectPrevCodeAction",
     "when": "codeActionMenuVisible"
@@ -210,12 +225,7 @@
   {
     "key": "alt+\\",
     "command": "extension.vim_escape",
-    "when": "editorTextFocus && vim.active && !inDebugRepl"
-  },
-  {
-    "key": "alt+\\",
-    "command": "extension.vim_escape",
-    "when": "editorHoverFocused && vim.active && !inDebugRepl"
+    "when": "(editorTextFocus || editorHoverFocused) && vim.active && !inDebugRepl"
   },
   {
     "key": "alt+\\",

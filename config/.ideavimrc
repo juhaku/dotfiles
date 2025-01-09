@@ -39,7 +39,11 @@ noremap <leader>d "+d
 noremap <leader>p "+p
 noremap <leader>P "\"+P
 noremap <leader>Y <Action>(CopyReference)
+
 map <leader>hr <Action>(Vcs.RollbackChangedLines)
+
+map <C-d> <C-d>zz
+map <C-u> <C-u>zz
 
 imap <A-d> <C-o>dw
 imap <A-h> <C-w>
