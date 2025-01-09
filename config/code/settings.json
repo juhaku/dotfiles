@@ -119,15 +119,15 @@
         "commands": ["workbench.action.toggleSidebarVisibility"]
       },
       {
-        "before": ["t", "o"],
+        "before": ["<leader>", "t", "o"],
         "commands": ["workbench.action.closeOtherEditors"]
       },
       {
-        "before": ["t", "c"],
+        "before": ["<leader>", "t", "c"],
         "commands": ["workbench.action.closeActiveEditor"]
       },
       {
-        "before": ["t", "a"],
+        "before": ["<leader>", "t", "a"],
         "commands": ["workbench.action.closeAllEditors"]
       },
       {

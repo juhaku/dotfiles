@@ -256,5 +256,14 @@
     "key": "alt+\\",
     "command": "cancelRenameInput",
     "when": "editorFocus && renameInputVisible"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "!vim.active"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.closeActiveEditor"
   }
 ]
