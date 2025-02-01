@@ -96,17 +96,8 @@ setup-nerd-font:
 	sudo fc-cache -f -v
 	rm -r ~/Downloads/$(font-name)*
 
-ifeq ($(wayland),true)
-configure-code: install-system-packages
-	@echo -e "$(LIGHT_GREEN)Configure code support wayland$(NOCOLOR)"
-	sudo cp ./config/fix-wayland-code.hook /usr/share/libalpm/hooks/fix-wayland-code.hook
-else
-configure-code:
-	@echo -e "$(LIGHT_GREEN)Wayland set to false, skipping configure code$(NOCOLOR)"
-endif
-
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
-	setup-nerd-font configure-code
+	setup-nerd-font 
 	@echo -e "$(LIGHT_GREEN)Done!, Reboot recommended to take configuration changes effect$(NOCOLOR)"
 
 email=
