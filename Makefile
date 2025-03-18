@@ -32,7 +32,7 @@ applist = $(flavor-apps) neovim alacritty spotify slack-desktop keepassxc telegr
 		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
 		libreoffice-fresh maven yarn visual-studio-code-bin \
-		intellij-idea-community-edition clang gimp git tig jq ufw tmux chromium
+		intellij-idea-community-edition clang gimp git tig jq ufw tmux chromium docker docker-buildx
 
 define app_installed =
 $(shell cmd=$$(command -v $(1)); if test -x $${cmd:-""}; then echo true; else echo false; fi)
