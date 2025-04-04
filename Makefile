@@ -116,8 +116,9 @@ endif
 	@echo -n "Enter private gitdir path: "; read dir; sed -i "s/{dir}/$$dir/" ~/.config/git/config
 ifeq ($(ssh),true)
 	@echo -n "Setup git signinkey path: "; read key; sed -i "s/{key}/$$key/" ~/.config/git/private-config
+	@echo -n "Setup allowed signers path: "; read signers; sed -i "s/{allowed_signers}/$$signers/" ~/.config/git/private-config
 else
-	@echo -e "$(LIGHT_YELLOW)Ssh disabled, cannot set git signingkey...$(NOCOLOR)"
+	@echo -e "$(LIGHT_YELLOW)Ssh disabled, cannot set git signingkey nor allowed signers...$(NOCOLOR)"
 	sed -i "/signingkey/d" ~/.config/git/private-config
 endif
 
