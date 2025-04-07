@@ -12,7 +12,7 @@ LIGHT_YELLOW = \e[93m
 NOCOLOR = \e[0m
 
 # default font
-font = https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/SourceCodePro.zip
+font = ./config/AdwaitaMonoNerdFont.zip
 font-name = $(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}')
 wayland = true
 nvidia=true
@@ -90,11 +90,18 @@ setup-bluetooth:
 
 setup-nerd-font:
 	@echo -e "$(LIGHT_GREEN)Setup nerd font, change the font with parameter: font=... e.g. font=$(font)$(NOCOLOR)"
-	curl -o ~/Downloads/$(font-name).zip -sSL $(font)
-	unzip -d ~/Downloads/$(font-name) ~/Downloads/$(font-name).zip
-	sudo cp -r ~/Downloads/$(font-name) /usr/share/fonts
+	if [[ "$(font)" = ./* ]]; then \
+		echo "Using relative path font..."; \
+		unzip -d ~/$(font-name) $(font); \
+		sudo cp -r ~/$(font-name) /usr/share/fonts; \
+	else \
+		echo "Downloading font..."; \
+		curl -o ~/Downloads/$(font-name).zip -sSL $(font); \
+		unzip -d ~/Downloads/$(font-name) ~/Downloads/$(font-name).zip; \
+		sudo cp -r ~/Downloads/$(font-name) /usr/share/fonts; \
+		rm -r ~/Downloads/$(font-name)*; \
+	fi
 	sudo fc-cache -f -v
-	rm -r ~/Downloads/$(font-name)*
 
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
 	setup-nerd-font 
