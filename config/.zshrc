@@ -108,6 +108,7 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 alias vim=nvim
 alias ls=eza
 alias tv='tmux new-session nvim'
+alias gcof="gco \$(g ls-remote | fzf | awk -F \/ '{print \$(NF)}')"
 
 eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
