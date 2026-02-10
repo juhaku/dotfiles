@@ -10,14 +10,14 @@ setup-ssh:
 # set global environment variables
 set-environment: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Set qt environment$(NOCOLOR)"
-	echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
-	echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment
+	#echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
+	#echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment
 	@echo -e "$(LIGHT_GREEN)Set ibus environment$(NOCOLOR)"
 	sudo echo -e "GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus" | sudo tee -a /etc/environment
 	@echo -e "$(LIGHT_GREEN)Change editor to neovim$(NOCOLOR)"
 	sudo sed -i 's/EDITOR=.*/EDITOR=nvim/' /etc/environment
 
-# create breeze-dark-adwaita flavor ionc theme
+# create breeze-dark-adwaita flavor icon theme
 create-breeze-adwaita-icons: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Create breeze-dark-adwaita flavor icon theme$(NOCOLOR)"
 	sudo cp -r $(ICONS_DIR)/breeze-dark $(ICONS_DIR)/breeze-dark-adwaita
@@ -35,7 +35,7 @@ setup-kvantum:
 	cp ./config/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
 
 # Gnome specific configuration
-configure: set-environment create-breeze-adwaita-icons setup-kvantum setup-ssh
+configure: set-environment setup-ssh
 	xdg-mime default org.gnome.Nautilus.desktop inode/directory
 	@echo -e "$(LIGHT_GREEN)Done configuring $(FLAVOR)$(NOCOLOR)"
 

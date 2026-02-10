@@ -12,27 +12,27 @@ LIGHT_YELLOW = \e[93m
 NOCOLOR = \e[0m
 
 # default font
-font = ./config/AdwaitaMonoNerdFont.zip
+font = /usr/share/fonts/Adwaita/AdwaitaMono-Regular.ttf
 font-name = $(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}')
 wayland = true
-nvidia=true
+nvidia=false
 nvidia-prerequisite = $(if $(shell if [[ $(nvidia) == true ]]; then echo true; else echo ""; fi), install-nvidia)
 clipboard-util = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else echo ""; fi),wl-clipboard,xclip)
 terminal = $(shell echo $$TERM)
 
-gnome-applist = okular konsole ibus-libpinyin dconf-editor \
-	breeze-icons kvantum qt5ct qt6ct qadwaitadecorations-qt6 \
-	gnome-browser-connector gparted appimagelauncher-bin
+gnome-applist = ibus-libpinyin dconf-editor \
+	gnome-browser-connector gparted 
 
 kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmonitor fcitx5-chinese-addons \
 	fcitx5-configtool plasma-browser-integration xdg-desktop-portal xdg-desktop-portal-kde kwalletmanager
 
 flavor-apps = $(shell if [[ "$(FLAVOR)" == "GNOME" ]]; then echo $(gnome-applist); elif [[ "$(FLAVOR)" == "KDE" ]]; then echo $(kde-applist); fi)
-applist = $(flavor-apps) neovim alacritty spotify slack-desktop keepassxc telegram-desktop zsh \
+applist = $(flavor-apps) neovim spotify slack-desktop keepassxc telegram-desktop zsh \
 		eza zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search \
 		fzf fd git-delta npm fnm jdk21-openjdk $(clipboard-util) ripgrep go pika-backup \
-		libreoffice-fresh maven yarn visual-studio-code-bin \
-		intellij-idea-community-edition clang gimp git tig jq ufw tmux chromium docker docker-buildx
+		libreoffice-fresh maven visual-studio-code-bin \
+		intellij-idea-community-edition clang gimp git tig jq ufw tmux chromium docker docker-buildx \
+		tailscale just helium-browser-bin proton-pass-bin
 
 define app_installed =
 $(shell cmd=$$(command -v $(1)); if test -x $${cmd:-""}; then echo true; else echo false; fi)
@@ -94,6 +94,12 @@ setup-nerd-font:
 		echo "Using relative path font..."; \
 		unzip -d ~/$(font-name) $(font); \
 		sudo cp -r ~/$(font-name) /usr/share/fonts; \
+	elif [[ "$(font)" = /* ]]; \
+		echo "Using sytem font, need patching..."; \
+		$(MAKE) font=$(font) patchfont; \
+		font_name=$(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}' | awk -F \- '{print $$1}'); \
+		sudo mkdir -p /usr/share/fonts/$$font_name; \
+		sudo cp $(font) /usr/share/fonts/$$font_name/
 	else \
 		echo "Downloading font..."; \
 		curl -o ~/Downloads/$(font-name).zip -sSL $(font); \
@@ -104,7 +110,7 @@ setup-nerd-font:
 	sudo fc-cache -f -v
 
 install: setup-bluetooth set-time-locale $(nvidia-prerequisite) setup-terminal configure \
-	setup-nerd-font 
+	setup-nerd-font setup-tailscale setup-ufw
 	@echo -e "$(LIGHT_GREEN)Done!, Reboot recommended to take configuration changes effect$(NOCOLOR)"
 
 email=
@@ -114,16 +120,16 @@ setup-git-configs:
 	mkdir -p ~/.config/git/
 	cp ./config/gitconfig ~/.config/git/config
 	cp ./config/private-config ~/.config/git/private-config
-	sed -i "s/{user}/$(USER)/" ~/.config/git/config
+	sed -i "s/{name}/$(USER)/" ~/.config/git/private-config
 ifdef email
 	sed -i "s/{email}/$(email)/" ~/.config/git/private-config
 else
 	@echo -n "Enter email for git config: "; read email; sed -i "s/{email}/$$email/" ~/.config/git/private-config
 endif
-	@echo -n "Enter private gitdir path: "; read dir; sed -i "s/{dir}/$$dir/" ~/.config/git/config
+	@echo -n "Enter private gitdir glob path pattern: "; read dir; sed -i "s|{dir}|$$dir|" ~/.config/git/config
 ifeq ($(ssh),true)
-	@echo -n "Setup git signinkey path: "; read key; sed -i "s/{key}/$$key/" ~/.config/git/private-config
-	@echo -n "Setup allowed signers path: "; read signers; sed -i "s/{allowed_signers}/$$signers/" ~/.config/git/private-config
+	@echo -n "Setup git signinkey path: "; read key; sed -i "s|{key}|$$key|" ~/.config/git/private-config
+	@echo -n "Setup allowed signers path: "; read signers; sed -i "s|{allowed_signers}|$$signers|" ~/.config/git/private-config
 else
 	@echo -e "$(LIGHT_YELLOW)Ssh disabled, cannot set git signingkey nor allowed signers...$(NOCOLOR)"
 	sed -i "/signingkey/d" ~/.config/git/private-config
@@ -162,12 +168,6 @@ setup-idea-configs:
 		mkdir -p ~/.config/JetBrains/$$idea_dir/keymaps/; \
 		cp ./config/'GNOME copy.xml' ~/.config/JetBrains/$$idea_dir/keymaps/'GNOME copy.xml'
 
-setup-alacritty:
-	@echo -e "$(LIGHT_GREEN)Setup alacritty$(NOCOLOR)"
-	mkdir -p ~/.config/alacritty/
-	cp ./config/alacritty.toml ~/.config/alacritty/alacritty.toml
-	mkdir -p ~/.config/alacritty/themes && git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-
 setup-zshrc:
 	@echo -e "$(LIGHT_GREEN)Setup zshrc$(NOCOLOR)"
 	chsh -s $$(which zsh)
@@ -194,7 +194,37 @@ setup-tmux:
 	cp ./config/.tmux.conf ~/.config/tmux/tmux.conf
 	sed -i "s/{terminal}/$(terminal)/g" ~/.config/tmux/tmux.conf
 
-dev-setup: setup-git-configs copy-ssh-configs setup-code-configs setup-idea-configs setup-alacritty setup-zshrc \
-	install-watchmux setup-neovim setup-tmux
+setup-tailscale:
+	@echo -e "$(LIGHT_GREEN)Setup tailscale$(NOCOLOR)"
+	sudo systemctl enable --now tailscaled.service
+	sudo tailscale up
+
+setup-ufw:
+	@echo -e "$(LIGHT_GREEN)Setup ufw$(NOCOLOR)"
+	udo ufw allow in on tailscale0
+	sudo systemctl enable --now ufw
+
+setup-corepack:
+	sudp npm install --global corepack@latest
+	corepack enable pnpm
+	corepack enable yarn
+
+dev-setup: copy-ssh-configs setup-git-configs  setup-code-configs setup-idea-configs setup-alacritty setup-zshrc \
+	install-watchmux setup-neovim setup-tmux setup-corepack
 	@echo -e "$(LIGHT_GREEN)Done, Happy coding  !$(NOCOLOR)"
 
+patchfont:
+	@echo -e "$(LIGHT_GREEN)Patch font '$(font)'$(NOCOLOR)"
+	curl -sL -o patcher.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip
+	unzip -d patcher patcher.zip
+	paru -S fontforge
+	fontforge --script ./patcher/font-patcher --mono --outputdir . --complete $(font)
+	paru -Rs fontforge
+	rm -rf patcher*
+	
+installfont:
+	@echo -e "$(LIGHT_GREEN)Install font '$(font)'$(NOCOLOR)"
+	font_name=$(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}' | awk -F \- '{print $$1}'); \
+		sudo mkdir -p /usr/share/fonts/$$font_name; \
+		sudo cp $(font) /usr/share/fonts/$$font_name/; \
+		sudo fc-cache -f -v;
