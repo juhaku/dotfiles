@@ -76,7 +76,7 @@ setup-terminal: install-system-packages
 # extended flavor specific configuration
 configure:
 	@echo -e "$(LIGHT_GREEN)Configure $(FLAVOR) specific settings$(NOCOLOR)"
-	@if test -f $(FLAVOR).Makefile; then $(MAKE) -f $(FLAVOR).Makefile $@; else echo -e "$(LIGHT_YELLOW)No $(FLAVOR).Makefile found$(NOCOLOR)"; fi
+	@if test -f $(FLAVOR).Makefile; then $(MAKE) -f $(FLAVOR).Makefile $@ SYSTEM_PACKAGES_INSTALLED=true; else echo -e "$(LIGHT_YELLOW)No $(FLAVOR).Makefile found$(NOCOLOR)"; fi
 
 # set time locale to en_GB
 set-time-locale: 

@@ -7,8 +7,12 @@ setup-ssh:
 	systemctl start --user gcr-ssh-agent.socket
 	echo 'export SSH_AUTH_SOCK=$$XDG_RUNTIME_DIR/gcr/ssh' | tee ~/.zprofile
 
+ifdef($(SYSTEM_PACKAGES_INSTALLED))
 # set global environment variables
+set-environment:
+else
 set-environment: install-system-packages
+endif
 	@echo -e "$(LIGHT_GREEN)Set qt environment$(NOCOLOR)"
 	#echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
 	#echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment

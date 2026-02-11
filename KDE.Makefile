@@ -7,8 +7,12 @@ setup-ssh:
 	mkdir -p ~/.config/environment.d/
 	cp ./config/ssh_askpass.conf ~/.config/environment.d/ssh_askpass.conf
 
+ifdef($(SYSTEM_PACKAGES_INSTALLED))
 # set global environment variables
+set-environment:
+else
 set-environment: install-system-packages
+endif
 	@echo -e "$(LIGHT_GREEN)Set qt environment$(NOCOLOR)"
 	echo "QT_QPA_PLATFORMTHEME=qt6ct" | sudo tee -a /etc/environment
 	echo "QT_WAYLAND_DECORATION=adwaita" | sudo tee -a /etc/environment
