@@ -42,7 +42,6 @@ endef
 install-system-packages: install-rust-toolchain
 	@echo -e "$(LIGHT_GREEN)Install system packages$(NOCOLOR)"
 	paru $(PACMAN_FLAGS) -S $(applist)
-	sudo ufw enable
 
 # install paru and alias it as yay if yay is not intalled
 install-paru:
@@ -58,13 +57,15 @@ install-rust-toolchain: install-paru
 
 # install nvidia and configure nvidia with wayland and suspend
 install-nvidia: install-paru
-	@echo -e "$(LIGHT_GREEN)Install and configure nvidia for wayland$(NOCOLOR)"
-	paru -S $(PACMAN_FLAGS) nvidia-inst
-	nvidia-inst
-	sudo systemctl enable nvidia-resume.service nvidia-suspend.service nvidia-hibernate.service
-	echo -e "options nvidia NVreg_PreserveVideoMemoryAllocations=1\noptions nvidia NVreg_TemporaryFilePath=/tmp" | sudo tee -a /lib/modprobe.d/system.conf
-	sudo dracut --force
-	sudo ln -s /dev/null /etc/udev/rules.d/61-gdm.rules
+	@echo -e "$(LIGHT_GREEN)Install nvidia for wayland$(NOCOLOR)"
+	if [[ "$(nvidia)" == "true" ]]; then \
+		echo "using $(LIGHT_YELLOW)latest$(NOCOLOR) version"; \
+		paru -S $(PACMAN_FLAGS) nvidia-inst; \
+		nvidia-inst; \
+	elif [[ -n "$(nvidia)" && "$(nvidia)" != "false" ]]; then \
+		echo "using custom package: $(LIGHT_YELLOW)$(nvidia)$(NOCOLOR)"; \
+		paru -S $(PACMAN_FLAGS) nvidia-580xx-dkms nvidia-580xx-settings nvidia-580xx-utils; \
+	fi
 
 setup-terminal: install-system-packages
 	@echo -e "$(LIGHT_GREEN)Setup terminal$(NOCOLOR)"
@@ -209,7 +210,7 @@ setup-corepack:
 	corepack enable pnpm
 	corepack enable yarn
 
-dev-setup: copy-ssh-configs setup-git-configs  setup-code-configs setup-idea-configs setup-alacritty setup-zshrc \
+dev-setup: copy-ssh-configs setup-git-configs  setup-code-configs setup-idea-configs setup-zshrc \
 	install-watchmux setup-neovim setup-tmux setup-corepack
 	@echo -e "$(LIGHT_GREEN)Done, Happy coding  !$(NOCOLOR)"
 
@@ -217,7 +218,7 @@ patchfont:
 	@echo -e "$(LIGHT_GREEN)Patch font '$(font)'$(NOCOLOR)"
 	curl -sL -o patcher.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip
 	unzip -d patcher patcher.zip
-	paru -S fontforge
+	paru -S $(PACMAN_FLAGS) fontforge
 	fontforge --script ./patcher/font-patcher --mono --outputdir . --complete $(font)
 	paru -Rs fontforge
 	rm -rf patcher*
@@ -228,3 +229,8 @@ installfont:
 		sudo mkdir -p /usr/share/fonts/$$font_name; \
 		sudo cp $(font) /usr/share/fonts/$$font_name/; \
 		sudo fc-cache -f -v;
+
+.PHONY: install-paru install-rust-toolchain install-system-packages install-nvidia \
+	setup-bluetooth set-time-locale setup-terminal configure setup-nerd-font setup-tailscale setup-ufw \
+	dev-setup copy-ssh-configs setup-git-configs setup-code-configs setup-idea-configs setup-zshrc \
+	install-watchmux setup-neovim setup-tmux setup-corepack patchfont installfont
