@@ -34,5 +34,5 @@ make dev-setup
 
 For neovim see the `README.md` of [nvim](https://github.com/juhaku/nvim) to see the plugins you should manually install via `mason`.
 * Idea plugins: IdeaVim, Lombok optional: Flutter, Android
-* Vscode plugins: Docker, Go, Prettier, Vim, Bash Ide, CodeLLB, crates, Flutter, Error Lens, ESLint, 
+* Vscode plugins: Docker, Go, Prettier, Vim, Bash Ide, CodeLLDB, crates, Flutter, Error Lens, ESLint, 
   Even Better TOML, rust-analyzer, GitLens, Kubernetes
