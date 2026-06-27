@@ -45,4 +45,14 @@
     "light": "One Light",
     "dark": "One Dark",
   },
+  "file_scan_exclusions": [
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.setting",
+  ]
 }
