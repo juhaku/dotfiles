@@ -268,4 +268,10 @@
       ]
     }
   },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space f": "editor::Format"
+    }
+  }
 ]
