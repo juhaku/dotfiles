@@ -1,0 +1,271 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-\\": "editor::Cancel",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "escape": "editor::Cancel",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space g b": "git::Blame",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-g b": "git::Blame",
+    },
+  },
+  {
+      "context": "Editor && vim_mode == normal",
+      "bindings": {
+        "space h r": "git::Restore",
+      },
+    },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "t s": "git::ToggleStaged"
+    }
+  },
+  {
+    "context": "menu",
+    "bindings": {
+      "alt-\\": "menu::Cancel",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == waiting && (vim_operator == ys || vim_operator == cs)",
+    "bindings": {
+      "alt-\\": "vim::SwitchToNormalMode",
+    },
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "alt-\\": "vim::SwitchToNormalMode",
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "alt-\\": "vim::SwitchToNormalMode",
+    },
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "alt-\\": "vim::SwitchToNormalMode",
+    },
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "alt-\\": "menu::Cancel",
+    },
+  },
+  {
+    "context": "ContextServerToolsModal",
+    "bindings": {
+      "alt-\\": "menu::Cancel",
+    },
+  },
+  {
+    "bindings": {
+      "alt-\\": "menu::Cancel",
+    },
+  },
+  {
+    "bindings": {
+      "space y": ["workspace::SendKeystrokes", "\" + y"],
+    },
+    "context": "vim_mode == normal || vim_mode == visual",
+  },
+  {
+    "bindings": {
+      "space d": ["workspace::SendKeystrokes", "\" + d"],
+    },
+    "context": "vim_mode == normal || vim_mode == visual",
+  },
+  {
+    "bindings": {
+      "space p": ["workspace::SendKeystrokes", "\" + p"],
+    },
+    "context": "vim_mode == normal || vim_mode == visual",
+  },
+  {
+    "bindings": {
+      "space shift-p": ["workspace::SendKeystrokes", "\" + P"],
+    },
+    "context": "vim_mode == normal || vim_mode == visual",
+  },
+  {
+    "bindings": {
+      "alt-backspace": ["workspace::SendKeystrokes", "ctrl-w"],
+    },
+    "context": "vim_mode == insert",
+  },
+  {
+    "bindings": {
+      "alt-d": ["workspace::SendKeystrokes", "ctrl-o \" _ d w"],
+    },
+    "context": "vim_mode == insert",
+  },
+  {
+    "bindings": {
+      "space n": "buffer_search::Dismiss",
+    },
+    "context": "vim_mode == normal || vim_mode == visual",
+  },
+  {
+    "bindings": {
+      "alt-j": ["workspace::SendKeystrokes", "alt-down"],
+    },
+  },
+  {
+    "bindings": {
+      "alt-k": ["workspace::SendKeystrokes", "alt-up"],
+    },
+  },
+  {
+    "context": "Picker > Editor",
+    "bindings": {
+      "ctrl-p": "menu::SelectPrevious",
+    },
+  },
+    {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space h p": "editor::ToggleSelectedDiffHunks",
+    },
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-p": "editor::ContextMenuPrevious",
+      "ctrl-n": "editor::ContextMenuNext",
+    },
+  },
+  {
+    "bindings": {
+      "ctrl-w o": "pane::CloseOtherItems",
+    },
+  },
+  {
+    "bindings": {
+      "alt-i": "pane::ActivateNextItem",
+    },
+  },
+  {
+    "bindings": {
+      "alt-o": "pane::ActivatePreviousItem",
+    },
+  },
+  {
+    "bindings": {
+      "g tab": "tab_switcher::Toggle",
+    },
+    "context": "vim_mode == normal"
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space l s": "tab_switcher::ToggleAll",
+    },
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space f f": "file_finder::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "space f g": "pane::DeploySearch"
+    },
+    "context": "vim_mode == normal",
+  },
+  {
+    "bindings": {
+      "ctrl-w q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "bindings": {
+      "alt-p": "search::SelectPreviousMatch"
+    }
+  },
+  {
+    "bindings": {
+      "alt-n": "search::SelectNextMatch"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "space f f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "space f f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt--": "agent::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-backspace": [
+        "editor::DeleteToPreviousWordStart",
+        {
+          "ignore_newlines": false,
+          "ignore_brackets": false
+        }
+      ]
+    }
+  },
+]

@@ -169,6 +169,11 @@ setup-idea-configs:
 		mkdir -p ~/.config/JetBrains/$$idea_dir/keymaps/; \
 		cp ./config/'GNOME copy.xml' ~/.config/JetBrains/$$idea_dir/keymaps/'GNOME copy.xml'
 
+setup-zed-configs:
+	@echo -e "$(LIGHT_GREEN)Setup zed configs$(NOCOLOR)"
+	cp ./config/zed.keymap.json ~/.config/zed/keymap.json
+	cp ./config/zed.settings.json ~/.config/zed/settings.json
+
 setup-zshrc:
 	@echo -e "$(LIGHT_GREEN)Setup zshrc$(NOCOLOR)"
 	chsh -s $$(which zsh)
@@ -210,8 +215,8 @@ setup-corepack:
 	corepack enable pnpm
 	corepack enable yarn
 
-dev-setup: copy-ssh-configs setup-git-configs  setup-code-configs setup-idea-configs setup-zshrc \
-	install-watchmux setup-neovim setup-tmux setup-corepack
+dev-setup: copy-ssh-configs setup-git-configs setup-code-configs setup-idea-configs setup-zed-configs \
+	setup-zshrc install-watchmux setup-neovim setup-tmux setup-corepack
 	@echo -e "$(LIGHT_GREEN)Done, Happy coding  !$(NOCOLOR)"
 
 patchfont:
@@ -233,4 +238,4 @@ installfont:
 .PHONY: install-paru install-rust-toolchain install-system-packages install-nvidia \
 	setup-bluetooth set-time-locale setup-terminal configure setup-nerd-font setup-tailscale setup-ufw \
 	dev-setup copy-ssh-configs setup-git-configs setup-code-configs setup-idea-configs setup-zshrc \
-	install-watchmux setup-neovim setup-tmux setup-corepack patchfont installfont
+	install-watchmux setup-neovim setup-tmux setup-corepack patchfont installfont setup-zed-configs
