@@ -7,18 +7,6 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
-    "bindings": {
-      // "shift shift": "file_finder::Toggle"
-    },
-  },
-  {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-      // "j k": "vim::NormalBefore"
-    },
-  },
-  {
     "context": "Editor",
     "bindings": {
       "alt-\\": "editor::Cancel",
@@ -43,16 +31,16 @@
     },
   },
   {
-      "context": "Editor && vim_mode == normal",
-      "bindings": {
-        "space h r": "git::Restore",
-      },
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space h r": "git::Restore",
     },
+  },
   {
     "context": "vim_mode == normal",
     "bindings": {
-      "t s": "git::ToggleStaged"
-    }
+      "t s": "git::ToggleStaged",
+    },
   },
   {
     "context": "menu",
@@ -159,7 +147,7 @@
       "ctrl-p": "menu::SelectPrevious",
     },
   },
-    {
+  {
     "context": "Editor && vim_mode == normal",
     "bindings": {
       "space h p": "editor::ToggleSelectedDiffHunks",
@@ -191,7 +179,7 @@
     "bindings": {
       "g tab": "tab_switcher::Toggle",
     },
-    "context": "vim_mode == normal"
+    "context": "vim_mode == normal",
   },
   {
     "context": "vim_mode == normal",
@@ -200,61 +188,61 @@
     },
   },
   {
-    "context": "vim_mode == normal",
     "bindings": {
-      "space f f": "file_finder::Toggle"
-    }
+      "ctrl-w q": "pane::CloseActiveItem",
+    },
   },
   {
     "bindings": {
-      "space f g": "pane::DeploySearch"
+      "alt-p": "search::SelectPreviousMatch",
+    },
+  },
+  {
+    "bindings": {
+      "alt-n": "search::SelectNextMatch",
+    },
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+    },
+  },
+  {
+    "bindings": {
+      "space f g": "pane::DeploySearch",
     },
     "context": "vim_mode == normal",
   },
   {
-    "bindings": {
-      "ctrl-w q": "pane::CloseActiveItem"
-    }
-  },
-  {
-    "bindings": {
-      "alt-p": "search::SelectPreviousMatch"
-    }
-  },
-  {
-    "bindings": {
-      "alt-n": "search::SelectNextMatch"
-    }
-  },
-  {
     "context": "!Editor && !Terminal",
     "bindings": {
-      "space f f": "file_finder::Toggle"
-    }
+      "space f f": "file_finder::Toggle",
+    },
   },
   {
     "context": "!Editor && !Terminal",
     "unbind": {
-      "space f": "file_finder::Toggle"
-    }
+      "space f": "file_finder::Toggle",
+    },
   },
   {
     "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
     "bindings": {
-      "space f f": "file_finder::Toggle"
-    }
+      "space f f": "file_finder::Toggle",
+    },
   },
   {
     "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
     "unbind": {
-      "space f": "file_finder::Toggle"
-    }
+      "space f": "file_finder::Toggle",
+    },
   },
   {
     "context": "Workspace",
     "bindings": {
-      "alt--": "agent::Toggle"
-    }
+      "alt--": "agent::Toggle",
+    },
   },
   {
     "context": "Editor",
@@ -263,15 +251,15 @@
         "editor::DeleteToPreviousWordStart",
         {
           "ignore_newlines": false,
-          "ignore_brackets": false
-        }
-      ]
-    }
+          "ignore_brackets": false,
+        },
+      ],
+    },
   },
   {
     "context": "vim_mode == normal",
     "bindings": {
-      "space f": "editor::Format"
-    }
-  }
+      "space f d": "editor::Format",
+    },
+  },
 ]
