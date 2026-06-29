@@ -133,12 +133,12 @@
   },
   {
     "bindings": {
-      "alt-j": ["workspace::SendKeystrokes", "alt-down"],
+      "alt-j": "editor::MoveLineDown", // ["workspace::SendKeystrokes", "alt-down"],
     },
   },
   {
     "bindings": {
-      "alt-k": ["workspace::SendKeystrokes", "alt-up"],
+      "alt-k": "editor::MoveLineUp", // ["workspace::SendKeystrokes", "alt-up"],
     },
   },
   {
@@ -262,4 +262,16 @@
       "space f d": "editor::Format",
     },
   },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-k": "editor::ShowSignatureHelp"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "shift-s": ["vim::PushAddSurrounds", {}]
+    }
+  }
 ]

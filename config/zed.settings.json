@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_signature_help_after_edits": false,
+  "auto_signature_help": true,
+  "project_panel": {
+    "dock": "right"
+  },
   "code_lens": "on",
   "inlay_hints": {
     "enabled": true
@@ -54,5 +59,53 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.setting",
-  ]
+  ],
+  "lsp": {
+    "jdtls": {
+      "initialization_options": {
+        "settings": {
+          "java": {
+            "sources": {
+              "organizeImports": {
+                "starThreshold": 9999,
+                "staticStarThreshold": 9999,
+              },
+            },
+            "import": {
+              "saveActions": {
+                "organizeImports": true,
+              },
+              "maven": {
+                "enabled": true,
+              },
+              "gradle": {
+                "enabled": true,
+              },
+            },
+            "maven": {
+              "downloadSources": true,
+            },
+            "implementationsCodeLens": {
+              "enabled": true,
+            },
+            "referencesCodeLens": {
+              "enabled": true,
+            },
+            "inlayHints": {
+              "parameterNames": {
+                "enabled": "all",
+              },
+            },
+            "signatureHelp": {
+              "enabled": true,
+            },
+            "completion": {
+              "matchCase": "off",
+              "maxResults": 999,
+            },
+          }
+        }
+      }
+    }
+  }
 }
