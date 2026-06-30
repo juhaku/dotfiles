@@ -12,12 +12,12 @@
       "alt-\\": "editor::Cancel",
     },
   },
-  {
-    "context": "Editor",
-    "unbind": {
-      "escape": "editor::Cancel",
-    },
-  },
+  // {
+  //   "context": "Editor",
+  //   "unbind": {
+  //     "escape": "editor::Cancel",
+  //   },
+  // },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
@@ -42,12 +42,12 @@
       "t s": "git::ToggleStaged",
     },
   },
-  {
-    "context": "menu",
-    "bindings": {
-      "alt-\\": "menu::Cancel",
-    },
-  },
+  // {
+  //   "context": "menu",
+  //   "bindings": {
+  //     "alt-\\": "menu::Cancel",
+  //   },
+  // },
   {
     "context": "Editor && vim_mode == waiting && (vim_operator == ys || vim_operator == cs)",
     "bindings": {
@@ -72,19 +72,20 @@
       "alt-\\": "vim::SwitchToNormalMode",
     },
   },
+  // {
+  //   "context": "ProjectPanel",
+  //   "bindings": {
+  //     "alt-\\": "menu::Cancel",
+  //   },
+  // },
+  // {
+  //   "context": "ContextServerToolsModal",
+  //   "bindings": {
+  //     "alt-\\": "menu::Cancel",
+  //   },
+  // },
   {
-    "context": "ProjectPanel",
-    "bindings": {
-      "alt-\\": "menu::Cancel",
-    },
-  },
-  {
-    "context": "ContextServerToolsModal",
-    "bindings": {
-      "alt-\\": "menu::Cancel",
-    },
-  },
-  {
+    "context": "!AgentPanel",
     "bindings": {
       "alt-\\": "menu::Cancel",
     },
@@ -266,6 +267,44 @@
     "context": "Editor && vim_mode == visual && !menu",
     "bindings": {
       "shift-s": ["vim::PushAddSurrounds", {}]
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "cmd--": "editor::Fold"
+    }
+  },
+  {
+    "bindings": {
+      "alt-e": "project_panel::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "alt-d": "debug_panel::Toggle"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-c": "agent::Toggle",
+    },
+  },
+  {
+    "bindings": {
+      "alt-g": "git_panel::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "alt-t": "terminal_panel::Toggle"
+    }
+  },
+  // for mac
+  {
+    "unbind": {
+      "cmd-0": "git_panel::ToggleFocus"
     }
   }
   {
