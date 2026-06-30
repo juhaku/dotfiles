@@ -239,12 +239,6 @@
     },
   },
   {
-    "context": "Workspace",
-    "bindings": {
-      "alt--": "agent::Toggle",
-    },
-  },
-  {
     "context": "Editor",
     "bindings": {
       "alt-backspace": [
@@ -272,6 +266,55 @@
     "context": "Editor && vim_mode == visual && !menu",
     "bindings": {
       "shift-s": ["vim::PushAddSurrounds", {}]
+    }
+  }
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-k": "editor::ShowSignatureHelp"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "shift-s": ["vim::PushAddSurrounds", {}]
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "cmd--": "editor::Fold"
+    }
+  },
+  {
+    "bindings": {
+      "alt-e": "project_panel::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "alt-d": "debug_panel::Toggle"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-c": "agent::Toggle",
+    },
+  },
+  {
+    "bindings": {
+      "alt-g": "git_panel::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "alt-t": "terminal_panel::Toggle"
+    }
+  },
+  {
+    "unbind": {
+      "cmd-0": "git_panel::ToggleFocus"
     }
   }
 ]
