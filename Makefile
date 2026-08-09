@@ -21,7 +21,7 @@ clipboard-util = $(if $(shell if [[ $(wayland) == true ]]; then echo true; else 
 terminal = $(shell echo $$TERM)
 
 gnome-applist = ibus-libpinyin dconf-editor \
-	gnome-browser-connector gparted 
+	gnome-browser-connector gparted
 
 kde-applist = partitionmanager fcitx5 fcitx5-breeze ksshaskpass plasma-systemmonitor fcitx5-chinese-addons \
 	fcitx5-configtool plasma-browser-integration xdg-desktop-portal xdg-desktop-portal-kde kwalletmanager
@@ -79,12 +79,12 @@ configure:
 	@if test -f $(FLAVOR).Makefile; then $(MAKE) -f $(FLAVOR).Makefile $@ SYSTEM_PACKAGES_INSTALLED=true; else echo -e "$(LIGHT_YELLOW)No $(FLAVOR).Makefile found$(NOCOLOR)"; fi
 
 # set time locale to en_GB
-set-time-locale: 
+set-time-locale:
 	@echo -e "$(LIGHT_GREEN)Set time locale to match up rest of the system, using en_GB$(NOCOLOR)"
 	localectl set-locale "LC_TIME=en_GB.UTF-8"
 
 # enable bluetooth
-setup-bluetooth: 
+setup-bluetooth:
 	@echo -e "$(LIGHT_GREEN)Enable bluetooth$(NOCOLOR)"
 	sudo systemctl enable bluetooth.service
 	sudo systemctl start bluetooth.service
@@ -227,7 +227,7 @@ patchfont:
 	fontforge --script ./patcher/font-patcher --mono --outputdir . --complete $(font)
 	paru -Rs fontforge
 	rm -rf patcher*
-	
+
 installfont:
 	@echo -e "$(LIGHT_GREEN)Install font '$(font)'$(NOCOLOR)"
 	font_name=$(shell v=$(font); echo $${v##*/} | awk -F \. '{print $$1}' | awk -F \- '{print $$1}'); \

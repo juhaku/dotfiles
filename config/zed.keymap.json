@@ -51,25 +51,25 @@
   {
     "context": "Editor && vim_mode == waiting && (vim_operator == ys || vim_operator == cs)",
     "bindings": {
-      "alt-\\": "vim::SwitchToNormalMode",
+      "alt-\\": "vim::NormalBefore",
     },
   },
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "alt-\\": "vim::SwitchToNormalMode",
+      "alt-\\": "vim::NormalBefore",
     },
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
-      "alt-\\": "vim::SwitchToNormalMode",
+      "alt-\\": "vim::NormalBefore",
     },
   },
   {
     "context": "vim_mode == insert",
     "bindings": {
-      "alt-\\": "vim::SwitchToNormalMode",
+      "alt-\\": "vim::NormalBefore",
     },
   },
   // {
