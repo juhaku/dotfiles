@@ -306,6 +306,17 @@
     "unbind": {
       "cmd-0": "git_panel::ToggleFocus"
     }
+  },
+  {
+    "bindings": {
+      "ctrl-/": "search::ToggleReplace"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
+    }
   }
   {
     "context": "Editor && vim_mode == insert",
