@@ -204,6 +204,16 @@
     },
   },
   {
+    "bindings": {
+      "alt-p": "editor::GoToPreviousReference",
+    },
+  },
+  {
+    "bindings": {
+      "alt-n": "editor::GoToNextReference",
+    },
+  }, 
+  {
     "context": "vim_mode == normal",
     "bindings": {
       "space f f": "file_finder::Toggle",
