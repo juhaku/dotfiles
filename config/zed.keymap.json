@@ -186,6 +186,7 @@
     "context": "vim_mode == normal",
     "bindings": {
       "space l s": "tab_switcher::ToggleAll",
+      "space f t": "tab_switcher::ToggleAll",
     },
   },
   {
