@@ -195,13 +195,10 @@
     },
   },
   {
+    "context": "Editor && !(showing_code_actions || showing_completions || FileFinder || menu || Picker)",
     "bindings": {
-      "alt-p": "search::SelectPreviousMatch",
-    },
-  },
-  {
-    "bindings": {
-      "alt-n": "search::SelectNextMatch",
+      "ctrl-p": "search::SelectPreviousMatch",
+      "ctrl-n": "search::SelectNextMatch",
     },
   },
   {
