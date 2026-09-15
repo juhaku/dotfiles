@@ -12,12 +12,6 @@
       "alt-\\": "editor::Cancel",
     },
   },
-  // {
-  //   "context": "Editor",
-  //   "unbind": {
-  //     "escape": "editor::Cancel",
-  //   },
-  // },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
@@ -42,12 +36,6 @@
       "t s": "git::ToggleStaged",
     },
   },
-  // {
-  //   "context": "menu",
-  //   "bindings": {
-  //     "alt-\\": "menu::Cancel",
-  //   },
-  // },
   {
     "context": "Editor && vim_mode == waiting && (vim_operator == ys || vim_operator == cs)",
     "bindings": {
@@ -72,18 +60,6 @@
       "alt-\\": "vim::NormalBefore",
     },
   },
-  // {
-  //   "context": "ProjectPanel",
-  //   "bindings": {
-  //     "alt-\\": "menu::Cancel",
-  //   },
-  // },
-  // {
-  //   "context": "ContextServerToolsModal",
-  //   "bindings": {
-  //     "alt-\\": "menu::Cancel",
-  //   },
-  // },
   {
     "context": "!AgentPanel",
     "bindings": {
@@ -324,12 +300,6 @@
     "context": "Workspace",
     "bindings": {
       "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
-    }
-  }
-  {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-      "ctrl-k": "editor::ShowSignatureHelp"
     }
   },
   {
