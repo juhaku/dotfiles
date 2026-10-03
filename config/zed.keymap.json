@@ -355,5 +355,12 @@
     "unbind": {
       "g i": "vim::InsertAtPrevious"
     }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "escape ctrl-w l": "workspace::ActivatePaneRight",
+      "escape ctrl-w k": "workspace::ActivatePaneUp"
+    }
   }
 ]
